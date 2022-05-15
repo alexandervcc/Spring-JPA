@@ -1,9 +1,13 @@
 package acc.spring.jpa.jpapractice.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
 import lombok.AllArgsConstructor;
@@ -25,4 +29,15 @@ public class Course {
     private String title;
     
     private Integer credits;
+
+    //Tell that the one-yo-one is already defined with the One to one at the other class
+    @OneToOne(
+        mappedBy = "course"
+    )
+    private CourseMaterial courseMaterial;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "fk_teacher",referencedColumnName = "teacherId")
+    private Teacher teacher;
+    
 }
